@@ -49,6 +49,7 @@
 
 */
 
+// Declares global variables to use later
 var allLetters;
 var currentLetter;
 var wordLetters;
@@ -56,9 +57,10 @@ var acrossClue;
 var downClue;
 var typeDirection = "right";
 
+// the init function will run when the window is loaded
 window.onload = init;
 
-
+// The init() function will select the first square of the puzzle, and add event listeners for the buttons below the puzzle, it also selects the clue for the current number. The function makes the show errors button show errors in red, and then after 3 seconds change it back. The show solution will fill in the puzzle, with the type direction switching whether the puzzle will type up to down or left to right.
 function init() {
       allLetters = document.querySelectorAll("table#crossword span")
       currentLetter = allLetters[0];
@@ -100,7 +102,7 @@ function init() {
             }
       }
 }
-
+// The formatPuzzle(puzzleLetter) fucntion will set the puzzle's letter to the current letter, set the background of tiles to white, and add background color to either down or to the side tiles. 
 function formatPuzzle(puzzleLetter) {
       currentLetter = puzzleLetter;
       for (var i = 0; i < allLetters.length; i++) {
@@ -118,7 +120,7 @@ function formatPuzzle(puzzleLetter) {
       }
       if (currentLetter.dataset.clueD != undefined) {
             downClue = document.getElementById(currentLetter.dataset.clueD);
-            downClue.style.color = "blue";
+            downClue.style.color = "red";
             wordLetters = document.querySelectorAll("[data-clue-D=" + currentLetter.getAttribute("data-clue-d") + "]");
             for (var i = 0; i < wordLetters.length; i++) {
                   wordLetters[i].style.backgroundColor = "rgb(255, 231, 231)";
@@ -130,7 +132,7 @@ function formatPuzzle(puzzleLetter) {
             currentLetter.style.backgroundColor = "rgb(255, 191, 191)";
       }
 }
-
+// selectLetter(event) will handle what keys are pressed, and whether to move left, down, etc. Or to set the key pressed as the tile's letter. It also prevents the browser from normally doing things based on its keys (moving the page down on the down key)
 function selectLetter(event) {
       var leftLetter = document.getElementById(currentLetter.dataset.left);
       var upLetter = document.getElementById(currentLetter.dataset.up);
@@ -160,6 +162,7 @@ function selectLetter(event) {
       event.preventDefault();
 }
 
+// The switchTypeDirection() will switch what direction is being typed, based on the button being pressed.
 function switchTypeDirection() {
       var typeImage = document.getElementById("directionImg");
       if (typeDirection === "right") {
